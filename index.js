@@ -66,14 +66,14 @@ app.get('/assign', async (req, res) => {
     }
     else {
         // assign all
-        const assignedUsers = await User.findOne({group: { $ne: null }})
+        // const assignedUsers = await User.findOne({group: { $ne: null }})
 
-        if(assignedUsers) {
-            return res.status(400).json({
-                error: true,
-                message: 'Groups Already chosen'
-            })
-        }
+        // if(assignedUsers) {
+        //     return res.status(400).json({
+        //         error: true,
+        //         message: 'Groups Already chosen'
+        //     })
+        // }
 
         const users = await User.find({});
 
@@ -92,7 +92,7 @@ app.get('/assign', async (req, res) => {
 app.get('/check-group', async (req, res) => {
     const code = req.query.code;
 
-    const user = await User.findOne({code});
+    const user = await User.findOne({code}).lean();
 
     if(!user) {
         return res.status(400).json({
@@ -101,8 +101,17 @@ app.get('/check-group', async (req, res) => {
         })
     }
 
+    let otherUser;
+
+    if(user.isFake) {
+        otherUser = await User.findOne({ isFake: true, fakeGroup: user.fakeGroup, code: { $ne: user.code } }).lean();
+    }
+
     return res.json({
-        data: user
+        data: {
+            ...user,
+            otherUser: otherUser?.name
+        }
     })
 })
 

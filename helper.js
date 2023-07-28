@@ -46,10 +46,17 @@ const assignGroups = (users) => {
 
     let fake_index = 0;
     for(let groupMember of groupMembers) {
-        const x = Math.floor(Math.random() * groupMember.length);
-        const m = groupMember[x];
+        // const x = Math.floor(Math.random() * groupMember.length);
+        const regroup = groupMember.sort(() => 0.5 - Math.random())
+        const m = regroup[0]
+        const n = regroup[1]
         updatedUsers[m] = {
             ...updatedUsers[m],
+            fakeGroup: Number(shuffledTo[fake_index]),
+            isFake: true
+        }
+        updatedUsers[n] = {
+            ...updatedUsers[n],
             fakeGroup: Number(shuffledTo[fake_index]),
             isFake: true
         }

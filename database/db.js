@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 
 // const chance = Chance();
 
-const MONGO_URI = 'mongodb://127.0.0.1:27017/games-night';
+const MONGO_URI = 'mongodb://127.0.0.1:27017/games'
 
 mongoose.Promise = global.Promise;
 
