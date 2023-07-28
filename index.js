@@ -12,11 +12,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
+app.get('/server/', (req, res) => {
     res.send("Hello there, Roy")
 });
 
-app.post('/add', async (req, res) => {
+app.post('/server/add', async (req, res) => {
     const body = req.body;
 
     const {
@@ -53,7 +53,7 @@ app.post('/add', async (req, res) => {
     })
 })
 
-app.get('/assign', async (req, res) => {
+app.get('/server/assign', async (req, res) => {
 
     const code = req.query.code;
 
@@ -89,7 +89,7 @@ app.get('/assign', async (req, res) => {
 
 })
 
-app.get('/check-group', async (req, res) => {
+app.get('/server/check-group', async (req, res) => {
     const code = req.query.code;
 
     const user = await User.findOne({code}).lean();
@@ -115,7 +115,7 @@ app.get('/check-group', async (req, res) => {
     })
 })
 
-app.get('/randomize', async (req, res) => {
+app.get('/server/randomize', async (req, res) => {
     const n = req.query.n ?? 1;
 
     const finalUsers = []
